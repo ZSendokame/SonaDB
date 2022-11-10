@@ -1,22 +1,29 @@
-# KDB
-*KDB* is a small library for Key-Value databases.<br>
+# SonaDB
+*SonaDB* ("Information" in *Toki Pona*) is a small library for Key-Value databases.<br>
 It can load binary files as Dictionaries, consumes little space on disk.
 
 # Install
 ```
-pip install git+https://github.com/ZSendokame/KDB.git
+pip install git+https://github.com/ZSendokame/SonaDB.git
 ```
 
 # Use
 ```py
-import kdb
+import sona
 
-db = kdb.Database(open('database.db', 'rb'))
+db = sona.Database(open('database.db', 'rb'))
 
 # Keys:
-db.set('key', 'value')  # Create a new key, None.
+db.set('key', 'value', algo='md5')  # Create a new key and hash if algorithm defined, None.
 db.get('key')  # Get a key, Any.
 db.remove('key')  # Remove a key, None.
 db.exists('key')  # Check if a key exists, Bool.
 db.rename('key', 'new_name')  # Rename a key, None.
+db.population()  # Get the length of Database or Key, Int.
+
+# Database
+db.clear()  # Delete all the Database on memory.
+db.dump()  # Saves all the memory to a file.
+db.query(lambda key, value: expression)
+# Iterate over the Database, giving key-value to the lambda and checking for True.
 ```
