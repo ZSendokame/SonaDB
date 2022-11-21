@@ -1,7 +1,6 @@
 import hashlib
 import os
 import pickle
-
 from io import TextIOWrapper
 from typing import Any
 
@@ -18,6 +17,9 @@ class Database(object):
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
         self.dump()
+
+    def __len__(self):
+        return len(self.database)
 
     def set(self, key: str, value: Any, algo: str = None) -> None:
         if algo is not None and algo in hashlib.algorithms_available:
@@ -39,11 +41,11 @@ class Database(object):
     def remove(self, key: str) -> None:
         self.database.pop(key)
 
-    def query(self, func) -> list:
+    def query(self, function: object) -> list:
         result = []
 
         for key, value in self.database.items():
-            if func(key, value):
+            if function(key, value):
                 result.append([key, value])
 
         return result
