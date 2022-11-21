@@ -4,7 +4,7 @@ long_description = open('./README.md')
 
 setup(
     name='SonaDB',
-    version='1.1.0',
+    version='1.2.0',
     url='https://github.com/ZSendokame/SonaDB',
     license='MIT license',
     author='ZSendokame',
