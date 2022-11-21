@@ -27,3 +27,7 @@ db.dump()  # Saves all the memory to a file.
 db.query(lambda key, value: expression)
 # Iterate over the Database, giving key-value to the lambda and checking for True.
 ```
+
+## Cli
+You can also access a CLI:
+`python -m sona --database file.db`
