@@ -4,7 +4,11 @@ It can load binary files as Dictionaries, consumes little space on disk.
 
 # Install
 ```
+# GIT+PIP
 pip install git+https://github.com/ZSendokame/SonaDB.git
+
+# PIP
+pip install SonaDB
 ```
 
 # Use
