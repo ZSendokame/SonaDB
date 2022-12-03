@@ -1,21 +1,22 @@
 import hashlib
 import os
 import pickle
-from io import TextIOWrapper
 from typing import Any
 
 
-class Database(object):
+class Database:
 
-    def __init__(self, database: TextIOWrapper):
-        self.size = os.path.getsize(database.name)
-        self.database = pickle.load(database) if self.size else {}
-        self.path = database.name
+    def __init__(self, database: str):
+        self.size = os.path.getsize(database)
+        self.file = open(database, 'rb')
+        self.database = pickle.load(self.file) if self.size else {}
+        self.path = database
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
+        self.close()
         self.dump()
 
     def __len__(self):
@@ -65,3 +66,6 @@ class Database(object):
 
     def clear(self) -> None:
         self.database.clear()
+
+    def close(self) -> None:
+        self.file.close()
