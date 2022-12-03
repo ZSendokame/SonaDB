@@ -15,7 +15,7 @@ pip install SonaDB
 ```py
 import sona
 
-db = sona.Database(open('database.db', 'rb'))
+db = sona.Database('database.db')
 
 # Keys:
 db.set('key', 'value', algo='md5')  # Create a new key and hash if algorithm defined, None.
