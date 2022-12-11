@@ -6,10 +6,11 @@ from typing import Any
 
 class Database:
 
-    def __init__(self, database: str):
+    def __init__(self, database: str, type: type = dict):
+        self.type = type()
         self.size = os.path.getsize(database)
         self.file = open(database, 'rb')
-        self.database = pickle.load(self.file) if self.size else {}
+        self.database = pickle.load(self.file) if self.size else self.type
         self.path = database
 
     def __enter__(self):
@@ -24,8 +25,9 @@ class Database:
 
     def set(self, key: str, value: Any, algo: str = None) -> None:
         if algo is not None and algo in hashlib.algorithms_available:
-            hash_function = hashlib.__getattribute__(algo)
-            value = hash_function(bytes(value, 'utf-8')).hexdigest()
+            hash_func = hashlib.__getattribute__(algo)
+            value = hash_func(bytes(value, 'utf-8'), usedforsecurity=True)
+            value = value.hexdigest()
 
         self.database[key] = value
 
@@ -34,6 +36,13 @@ class Database:
             return None
 
         return self.database[key]
+
+    def append(self, value: Any, key: str = None) -> None:
+        if isinstance(self.type, list):
+            self.database.append(value)
+
+        elif self.exists(key):
+            self.database[key].append(value)
 
     def rename(self, key: str, name: str) -> None:
         if key in self.database:
@@ -47,7 +56,7 @@ class Database:
 
         for key, value in self.database.items():
             if function(key, value):
-                result.append([key, value])
+                result.append((key, value))
 
         return result
 
