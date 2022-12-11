@@ -4,7 +4,7 @@ long_description = open('./README.md')
 
 setup(
     name='SonaDB',
-    version='1.2.2',
+    version='2.2.2',
     url='https://github.com/ZSendokame/SonaDB',
     license='MIT license',
     author='ZSendokame',
@@ -12,5 +12,5 @@ setup(
     long_description=long_description.read(),
     long_description_content_type='text/markdown',
 
-    packages=(find_packages(include=['sona']))
+    packages=(find_packages(include=['sonadb']))
 )
